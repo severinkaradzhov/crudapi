@@ -3,7 +3,9 @@ const app = express()
 const port = 3000
 //import controllers
 const validateUser = require('./middleware/validateUserData')
+const validateProducts = require('./middleware/validateProductData')
 const userSchema = require('./schema/userSchema')
+const productSchema = require('./schema/productSchema')
 app.use(express.json())
 
 app.get('/products', (req, res) => {
@@ -14,8 +16,8 @@ app.get('/products/:id', (req, res) => {
 
 })
 
-app.post('/product', (req, res) => {
-
+app.post('/product', validateProducts(productSchema), (req, res) => {
+	res.status(201).send('Products')
 })
 
 app.put('/products/:id', (req, res) => {
