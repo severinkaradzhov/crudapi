@@ -6,6 +6,15 @@ const validateUser = require('./middleware/validateUserData')
 const validateProducts = require('./middleware/validateProductData')
 const userSchema = require('./schema/userSchema')
 const productSchema = require('./schema/productSchema')
+const mongoose = require('mongoose')
+const postUser = require('./controllers/user/postRegister')
+const dbURI = 'mongodb+srv://user123:user123@cluster0.n9esa.mongodb.net/crudapi?retryWrites=true&w=majority'
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }).then(() =>
+	app.listen(port, () => {
+		console.log(`Example app listening on port ${port}`)
+	})
+)
+	.catch((err) => console.log(err))
 app.use(express.json())
 
 app.get('/products', (req, res) => {
@@ -28,10 +37,5 @@ app.delete('/products/:id', (req, res) => {
 
 })
 
-app.post('/users/register', validateUser(userSchema), (req, res) => {
-	res.status(201).send('Hello')
-})
+app.post('/users/register', validateUser(userSchema), postUser)
 
-app.listen(port, () => {
-	console.log(`Server is listening on port ${port}`)
-})

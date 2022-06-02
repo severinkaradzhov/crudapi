@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
 	username: {
 		type: String,
-		required: true
+		required: true,
+		unique: true,
 	},
 	firstName: {
 		type: String,
@@ -13,9 +14,17 @@ const userSchema = new Schema({
 	lastName: {
 		type: String,
 		required: false
+	},
+	email: {
+		type: String,
+		required: true,
+		unique: true,
+	},
+	password: {
+		type: String,
+		required: true
 	}
 })
 
-userSchema.index({ email: -1 }, { unique: true })
-const User = mongoose.model('User', userSchema)
+const User = mongoose.model('Users', userSchema)
 module.exports = User
