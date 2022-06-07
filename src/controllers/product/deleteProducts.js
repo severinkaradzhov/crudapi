@@ -1,4 +1,4 @@
-//const Product = require('../../models/productModel')
+
 const functions = require('../../models/productModel')
 
 function deleteProduct(req, res) {

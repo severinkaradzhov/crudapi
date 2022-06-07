@@ -44,6 +44,5 @@ function findById(id) {
 	return Product.findById(id)
 }
 
-module.exports = { remove, insert, Product, find, findById }
 
-//module.exports = Product
+module.exports = { remove, insert, find, findById }
