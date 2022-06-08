@@ -39,7 +39,6 @@ function insert(product) {
 	return Product.collection.insertOne(product)
 }
 function find(queries) {
-	//console.log('prod model q ' + price)
 	return Product.find(queries, { _id: 0 })
 }
 function findById(id) {

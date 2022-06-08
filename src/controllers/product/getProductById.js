@@ -2,7 +2,6 @@ const functions = require('../../models/productModel')
 
 function getProductById(req, res) {
 	const id = (req.params.id)
-	console.log(id)
 	functions.findById(id).then(result => {
 		res.status(201).send(result)
 	}).catch(err => {
