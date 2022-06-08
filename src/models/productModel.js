@@ -32,16 +32,18 @@ const productSchema = new Schema({
 const Product = mongoose.model('Products', productSchema)
 
 function remove(id) {
-	return Product.findByIdAndDelete(id)
+	return Product.findOneAndRemove({ 'sku': id })
+	//return Product.deleteMany({})
 }
 function insert(product) {
 	return Product.collection.insertOne(product)
 }
-function find() {
-	return Product.find()
+function find(queries) {
+	//console.log('prod model q ' + price)
+	return Product.find(queries, { _id: 0 })
 }
 function findById(id) {
-	return Product.findById(id)
+	return Product.findOne({ 'sku': id }, { _id: 0 })
 }
 
 
