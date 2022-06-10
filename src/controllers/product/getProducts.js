@@ -25,7 +25,8 @@ function getProducts(req, res) {
 	}
 	console.log(filter)
 	functions.find(filter).skip(page * page_size).limit(page_size).then(result => {
-		res.status(201).send(result)
+		if (result === null) return res.status(404).send('No products matched your criteria')
+		return res.status(201).send(result)
 	}).catch(err => {
 		res.status(500).send(err.message)
 	})
