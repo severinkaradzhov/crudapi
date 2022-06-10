@@ -2,27 +2,33 @@ const express = require('express')
 const app = express()
 const port = 3000
 const validateUser = require('./middleware/validateUserData')
+const validateUserLogin = require('./middleware/validateUserLogin')
 const validateProducts = require('./middleware/validateProductData')
 const userSchema = require('./schema/userSchema')
 const productSchema = require('./schema/productSchema')
 const postUser = require('./controllers/user/postRegister')
 const postProduct = require('./controllers/product/postProduct')
+const postLogin = require('./controllers/user/postLogin')
 const deleteProduct = require('./controllers/product/deleteProducts')
 const getProductById = require('./controllers/product/getProductById')
 const getProducts = require('./controllers/product/getProducts')
+const auth = require('./middleware/auth')
+const userLoginSchema = require('./schema/userLoginSchema')
 require('./common/db')
 
 app.use(express.json())
 
-app.get('/products', getProducts)
+app.get('/products', auth, getProducts)
 
-app.get('/products/:id', getProductById)
+app.get('/products/:id', auth, getProductById)
 
-app.post('/product', validateProducts(productSchema), postProduct)
+app.post('/product', auth, validateProducts(productSchema), postProduct)
 
-app.delete('/products/:id', deleteProduct)
+app.delete('/products/:id', auth, deleteProduct)
 
 app.post('/users/register', validateUser(userSchema), postUser)
+
+app.post('/users/login', validateUserLogin(userLoginSchema), postLogin)
 
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`)

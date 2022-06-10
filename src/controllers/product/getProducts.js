@@ -17,6 +17,12 @@ function getProducts(req, res) {
 		if (inStock === 'true') filter.inStock = { '$gte': 1 }
 		if (inStock === 'false') filter.inStock = { '$eq': 0 }
 	}
+	if (search) {
+
+		filter.$text = {
+			$search: /omemade/i
+		}
+	}
 	console.log(filter)
 	functions.find(filter).skip(page * page_size).limit(page_size).then(result => {
 		res.status(201).send(result)
