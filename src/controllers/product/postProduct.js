@@ -6,8 +6,8 @@ async function postProduct(req, res) {
 		const data = await functions.insert(req.body)
 		return res.status(201).send(data)
 	} catch (err) {
-		console.log(err.stack)
-		return res.status(400).send({ msg: err.message })
+		if (err.code === 11000) return res.status(400).send({ msg: 'Cannot have multiple products with the same sku' })
+		return res.status(400).send(err.message)
 	}
 }
 
