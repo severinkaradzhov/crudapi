@@ -1,4 +1,4 @@
-const User = require('../../models/userModel')
+const functions = require('../../models/userModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
@@ -6,7 +6,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 async function postLogin(req, res) {
-	const user = await User.findOne({ 'username': req.body.username }, { _id: 0 })
+	const user = await functions.find(req.body.username)
 	if (!user) return res.status(400).send('User does not exist')
 	const isValidPass = await bcrypt.compare(req.body.password, user.password)
 	if (!isValidPass) return res.status(400).send('Invalid password')

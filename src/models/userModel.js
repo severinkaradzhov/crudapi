@@ -27,4 +27,7 @@ const userSchema = new Schema({
 })
 
 const User = mongoose.model('Users', userSchema)
-module.exports = User
+function find(username) {
+	return User.findOne({ 'username': username }, { _id: 0 })
+}
+module.exports = { User, find }
