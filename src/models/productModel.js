@@ -44,6 +44,12 @@ function find(queries) {
 function findById(id) {
 	return Product.findOne({ 'sku': id }, { _id: 0 })
 }
+function update(id, product) {
+	return Product.updateOne({ 'sku': id }, product)
+}
 
 
-module.exports = { remove, insert, find, findById }
+module.exports = {
+	remove, insert, find, findById
+	, update
+}

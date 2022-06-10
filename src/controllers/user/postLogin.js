@@ -10,6 +10,7 @@ async function postLogin(req, res) {
 	if (!user) return res.status(400).send('User does not exist')
 	const isValidPass = await bcrypt.compare(req.body.password, user.password)
 	if (!isValidPass) return res.status(400).send('Invalid password')
+	// eslint-disable-next-line no-undef
 	const token = jwt.sign({ username: user.username }, process.env.TOKEN_SECRET)
 	res.header('Authorization', token).status(200).send(token)
 }
