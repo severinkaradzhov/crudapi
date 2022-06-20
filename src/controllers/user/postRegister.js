@@ -4,8 +4,11 @@ async function postUser(req, res) {
 
 	try {
 		const { password: plainTextPassword } = req.body
+		console.log('6')
 		req.body.password = await bcrypt.hash(plainTextPassword, 10)
+		console.log('7')
 		await functions.User.collection.insertOne(req.body)
+		console.log('8')
 		console.log(req.body)
 		return res.status(201).send('Registered successfully')
 	} catch (err) {

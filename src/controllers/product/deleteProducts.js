@@ -1,17 +1,17 @@
 const functions = require('../../models/productModel')
-const addToTemp = require('../../models/temporaryModel')
+const tempFunctions = require('../../models/temporaryModel')
 
 function deleteProduct(req, res) {
 	const id = req.params.id
-	functions.remove(id).then(result => {
+	return functions.remove(id).then(result => {
 		if (result === null) return res.status(404).send({ msg: 'Product does not exist' })
 		console.log(result)
-		addToTemp(result)
+		tempFunctions.addToTemp(result)
 		console.log('Deleted')
-		return res.status(200).send({ msg: 'Deleted' })
+		return res.status(204).send()
 	}).catch(err => {
 		console.log(err)
-		return res.status(400).send(err.message)
+		return res.status(500).send(err)
 	})
 }
 

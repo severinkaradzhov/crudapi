@@ -55,4 +55,4 @@ function addToTemp(product) {
 	return Temporary.collection.insertOne(temp)
 }
 
-module.exports = addToTemp
+module.exports = { addToTemp }

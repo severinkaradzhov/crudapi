@@ -2,7 +2,7 @@ const productSchema = {
 	type: 'object',
 	properties: {
 		name: { type: 'string', minLength: 2, maxLength: 50 },
-		price: { type: 'number' },
+		price: { type: 'number', minimum: 0 },
 		description: { type: 'string', minLength: 2, maxLength: 50 },
 		sku: { type: 'string' },
 		inStock: { type: 'number' },

@@ -1,13 +1,13 @@
 const functions = require('../../models/productModel')
+const { isEmpty } = require('lodash')
 
 function getProductById(req, res) {
 	const id = (req.params.id)
-	functions.findById(id).then(result => {
-		if (result === null) res.status(404).send({ msg: 'Product was not found' })
-		res.status(201).send(result)
+	return functions.findById(id).then(result => {
+		if (isEmpty(result)) return res.status(404).send({ msg: 'Product was not found' })// check 
+		return res.status(200).send(result)
 	}).catch(err => {
-		console.log(err)
-		res.status(400).send(err.message)
+		return res.status(500).send(err)//server side
 	})
 }
 

@@ -8,7 +8,8 @@ const productSchema = new Schema({
 	},
 	price: {
 		type: Number,
-		required: true
+		required: true,
+		min: [0, 'cannot have price less than 0']
 	},
 	description: {
 		type: String,
@@ -45,8 +46,12 @@ function findById(id) {
 	return Product.findOne({ 'sku': id }, { _id: 0 })
 }
 function update(id, product) {
-	const options = { runValidators: true }
-	return Product.updateOne({ 'sku': id }, product, options)
+	const options = {
+		runValidators: true,
+		new: true,
+		upsert: false
+	}
+	return Product.findOneAndUpdate({ 'sku': id }, product, options)
 }
 
 
