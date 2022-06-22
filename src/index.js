@@ -9,6 +9,7 @@ const productSchema = require('./schema/productSchema')
 const postUser = require('./controllers/user/postRegister')
 const postProduct = require('./controllers/product/postProduct')
 const postLogin = require('./controllers/user/postLogin')
+const sendEmail = require('./controllers/product/sendEmail')
 const updateProduct = require('./controllers/product/putProducts')
 const deleteProduct = require('./controllers/product/deleteProducts')
 const getProductById = require('./controllers/product/getProductById')
@@ -22,6 +23,10 @@ app.use(express.json())
 app.get('/products', auth, getProducts)
 
 app.get('/products/:id', auth, getProductById)
+
+//app.get('/products/report', auth, getReport)
+
+app.post('/send/email', auth, sendEmail)
 
 app.post('/product', auth, validateProducts(productSchema), postProduct)
 
