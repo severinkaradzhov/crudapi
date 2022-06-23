@@ -8,7 +8,7 @@ async function sendEmail(req, res) {
 	const { emails } = req.body
 	console.log(emails);
 
-	const products = await functions.find().then(result => {
+	const products = functions.find().then(result => {
 		return result
 	})
 
@@ -37,11 +37,13 @@ async function sendEmail(req, res) {
 	}
 	msg.html += '</table>'
 
-	await transporter.sendMail(msg).then(() => {
+
+	try {
+		await transporter.sendMail(msg)
 		return res.status(200).send('Email sent!')
-	}).catch((err) => {
+	} catch (err) {
 		return res.status(500).send(err)
-	})
+	}
 
 }
 

@@ -7,7 +7,6 @@ function updateProduct(req, res) {
 		console.log('Updated')
 		return res.status(200).send(result)
 	}).catch(err => {
-		console.log('--YES');
 		return res.status(500).send(err)
 	})
 }

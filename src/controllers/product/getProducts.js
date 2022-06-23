@@ -31,7 +31,7 @@ function getProducts(req, res) {
 		if (result.length === 0) return res.status(404).send('No products matched your criteria')
 		return res.status(200).send(result)
 	}).catch(err => {
-		res.status(500).send(err.message)
+		return res.status(500).send(err.message)
 	})
 }
 

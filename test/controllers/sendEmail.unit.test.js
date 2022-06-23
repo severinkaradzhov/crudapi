@@ -27,7 +27,6 @@ describe('sendEmail', () => {
 
 		await sendEmail(req, res)
 
-		console.log(res.status)
 		expect(res.status).toHaveBeenCalledWith(200)
 		expect(res.send).toHaveBeenCalledWith('Email sent!')
 	})

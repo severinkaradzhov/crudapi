@@ -14,6 +14,7 @@ const updateProduct = require('./controllers/product/putProducts')
 const deleteProduct = require('./controllers/product/deleteProducts')
 const getProductById = require('./controllers/product/getProductById')
 const getProducts = require('./controllers/product/getProducts')
+const getReport = require('./controllers/product/getReport')
 const auth = require('./middleware/auth')
 const userLoginSchema = require('./schema/userLoginSchema')
 require('./common/db')
@@ -22,9 +23,9 @@ app.use(express.json())
 
 app.get('/products', auth, getProducts)
 
-app.get('/products/:id', auth, getProductById)
+app.get('/products/report', auth, getReport)
 
-//app.get('/products/report', auth, getReport)
+app.get('/products/:id', auth, getProductById)
 
 app.post('/send/email', auth, sendEmail)
 
