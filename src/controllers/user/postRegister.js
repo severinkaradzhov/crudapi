@@ -1,11 +1,11 @@
-const functions = require('../../models/userModel')
+const userModels = require('../../models/userModel')
 const bcrypt = require('bcryptjs')
 async function postUser(req, res) {
 
 	try {
 		const { password: plainTextPassword } = req.body
 		req.body.password = await bcrypt.hash(plainTextPassword, 10)
-		await functions.User.collection.insertOne(req.body)
+		await userModels.User.collection.insertOne(req.body)
 		console.log(req.body)
 		return res.status(201).send('Registered successfully')
 	} catch (err) {

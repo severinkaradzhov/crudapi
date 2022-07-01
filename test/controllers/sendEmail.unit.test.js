@@ -12,7 +12,7 @@ jest.mock('nodemailer', () => {
 
 jest.mock('../../src/models/productModel', () => {
 	return {
-		find: jest.fn().mockReturnThis()
+		find: jest.fn()
 	}
 })
 
@@ -42,7 +42,7 @@ describe('sendEmail', () => {
 		await sendEmail(req, res)
 
 		expect(res.status).toHaveBeenCalledWith(500)
-		expect(res.send).toHaveBeenCalledWith('Error')
+		expect(res.send).toHaveBeenCalledWith('There was an error sending your email!')
 	})
 
 })

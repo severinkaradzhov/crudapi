@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer')
-const functions = require('../../models/productModel')
+const productModels = require('../../models/productModel')
 const dotenv = require('dotenv')
 
 dotenv.config()
@@ -8,9 +8,7 @@ async function sendEmail(req, res) {
 	const { emails } = req.body
 	console.log(emails);
 
-	const products = functions.find().then(result => {
-		return result
-	})
+	const products = await productModels.find()
 
 	let transporter = nodemailer.createTransport({
 		service: "gmail",
@@ -42,7 +40,8 @@ async function sendEmail(req, res) {
 		await transporter.sendMail(msg)
 		return res.status(200).send('Email sent!')
 	} catch (err) {
-		return res.status(500).send(err)
+		console.log(err.stack);
+		return res.status(500).send('There was an error sending your email!')
 	}
 
 }

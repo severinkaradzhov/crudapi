@@ -1,17 +1,32 @@
-const functions = require('../../models/productModel')
-const { parse } = require('json2csv');
+const productModels = require('../../models/productModel')
+const { AsyncParser } = require('json2csv');
 
-function getReport(req, res) {
+async function getReport(req, res) {
 
-	const fields = ['name', 'price', 'brand', 'sku', 'inStock', 'description'];
-	const opts = { fields };
-	return functions.find().then(result => {
-		const csv = parse(result, opts)
-		return res.status(200).send(csv)
-	}).catch(err => {
-		return res.status(500).send(err)
-	})
+	const headers = ['name', 'price', 'brand', 'sku', 'inStock', 'description']
+	const opts = { headers }
+	const transformOpts = { highWaterMark: 8192 }
+
+	const asyncParser = new AsyncParser(opts, transformOpts)
+
+	const data = await productModels.find()
+	asyncParser.processor
+		.pipe(res)
+		.on('end', () => {
+			return res
+				.setHeader('Content-disposition', 'attachment; filename=data.csv')
+				.set('Content-Type', 'multipart/form-data; charset=utf-8')
+				.status(200)
+				.send()
+		}).on('error', err => {
+			return res.status(500).send(err)
+		})
+
+	asyncParser.input.push(JSON.stringify(data))
+	asyncParser.input.push(null)
 
 }
 
 module.exports = getReport
+
+

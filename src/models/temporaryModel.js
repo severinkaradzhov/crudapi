@@ -42,7 +42,7 @@ function addToTemp(product) {
 	Temporary.collection.createIndex({
 		date: 1,
 	}, {
-		expireAfterSeconds: process.env.EXPIRE_AFTER,
+		expireAfterSeconds: parseInt(process.env.EXPIRE_AFTER),
 	})
 	const temp = {
 		_id: product._id,
@@ -51,7 +51,7 @@ function addToTemp(product) {
 		sku: product.sku,
 		description: product.description,
 		inStock: product.inStock,
-		date: new Date(Date.now() - process.env.EXPIRE_AFTER * 1000)
+		date: new Date(Date.now() - parseInt(process.env.EXPIRE_AFTER) * 1000)
 	}
 	if (product.brand) temp.brand = product.brand
 	console.log(temp)

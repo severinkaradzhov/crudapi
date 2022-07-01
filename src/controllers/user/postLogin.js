@@ -1,4 +1,4 @@
-const functions = require('../../models/userModel')
+const userModels = require('../../models/userModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
@@ -6,7 +6,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 async function postLogin(req, res) {
-	const user = await functions.find(req.body.username)
+	const user = await userModels.find(req.body.username)
 	if (!user) return res.status(404).send('Invalid username/password')
 	const isValidPass = await bcrypt.compare(req.body.password, user.password) // mock compare
 	if (!isValidPass) return res.status(400).send('Invalid username/password')
