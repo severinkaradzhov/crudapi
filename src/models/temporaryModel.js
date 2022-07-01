@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const dotenv = require('dotenv')
+
+dotenv.config()
 
 const temporarySchema = new Schema({
 	name: {
@@ -39,7 +42,7 @@ function addToTemp(product) {
 	Temporary.collection.createIndex({
 		date: 1,
 	}, {
-		expireAfterSeconds: 60 * 60 * 24,
+		expireAfterSeconds: parseInt(process.env.EXPIRE_AFTER),
 	})
 	const temp = {
 		_id: product._id,
@@ -48,7 +51,7 @@ function addToTemp(product) {
 		sku: product.sku,
 		description: product.description,
 		inStock: product.inStock,
-		date: new Date(Date.now() - 60 * 60 * 24 * 1000)
+		date: new Date(Date.now() - parseInt(process.env.EXPIRE_AFTER) * 1000)
 	}
 	if (product.brand) temp.brand = product.brand
 	console.log(temp)

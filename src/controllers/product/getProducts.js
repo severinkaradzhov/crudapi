@@ -1,4 +1,4 @@
-const functions = require('../../models/productModel')
+const productModels = require('../../models/productModel')
 
 
 function getProducts(req, res) {
@@ -27,11 +27,11 @@ function getProducts(req, res) {
 			console.log('Invalid Data')
 		}
 	}
-	return functions.find(filter).skip(page * page_size).limit(page_size).then(result => {
+	return productModels.find(filter).skip(page * page_size).limit(page_size).then(result => {
 		if (result.length === 0) return res.status(404).send('No products matched your criteria')
 		return res.status(200).send(result)
 	}).catch(err => {
-		res.status(500).send(err.message)
+		return res.status(500).send(err.message)
 	})
 }
 

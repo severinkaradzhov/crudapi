@@ -54,6 +54,6 @@ describe('postLoginController', () => {
 		await postLoginController(req, res)
 
 		expect(res.status).toHaveBeenCalledWith(404)
-		expect(res.send).toHaveBeenCalledWith("User does not exist")
+		expect(res.send).toHaveBeenCalledWith("Invalid username/password")
 	})
 })

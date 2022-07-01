@@ -1,4 +1,3 @@
-//check req.header.Authorization in db 
 const jwt = require('jsonwebtoken')
 
 module.exports = function (req, res, next) {
@@ -11,7 +10,7 @@ module.exports = function (req, res, next) {
 		req.user = verified
 		next()
 	} catch (err) {
-		return res.status(400).send('Invalid Token') // 400 or 401?
+		return res.status(401).send('Invalid Token')
 	}
 }
 
