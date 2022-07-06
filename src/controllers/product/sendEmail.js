@@ -1,12 +1,13 @@
 const nodemailer = require('nodemailer')
 const productModels = require('../../models/productModel')
 const dotenv = require('dotenv')
+const logger = require('../../common/logger')
 
 dotenv.config()
 
 async function sendEmail(req, res) {
+	logger.info(`req <= /POST /send/email`)
 	const { emails } = req.body
-	console.log(emails);
 
 	const products = await productModels.find()
 
@@ -38,9 +39,10 @@ async function sendEmail(req, res) {
 
 	try {
 		await transporter.sendMail(msg)
+		logger.info(`res => [200] /POST /send/email`)
 		return res.status(200).send('Email sent!')
 	} catch (err) {
-		console.log(err.stack);
+		logger.info(`res => [500] /POST /send/email - ${err.stack}`)
 		return res.status(500).send('There was an error sending your email!')
 	}
 
