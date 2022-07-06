@@ -53,7 +53,7 @@ describe('postLoginController', () => {
 
 		await postLoginController(req, res)
 
-		expect(res.status).toHaveBeenCalledWith(404)
+		expect(res.status).toHaveBeenCalledWith(400)
 		expect(res.send).toHaveBeenCalledWith("Invalid username/password")
 	})
 })
